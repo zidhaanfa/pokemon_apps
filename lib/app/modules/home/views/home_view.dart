@@ -2,6 +2,9 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:pokemon_apps/app/modules/camera/bindings/camera_binding.dart';
+import 'package:pokemon_apps/app/modules/camera/controllers/camera_controller.dart';
+import 'package:pokemon_apps/app/modules/camera/views/camera_view.dart';
 import 'package:pokemon_apps/app/modules/pokemon/views/pokemon_view.dart';
 
 import '../../../config/function/snackbar.dart';
@@ -18,6 +21,21 @@ class HomeView extends GetView<HomeController> {
         appBar: AppBar(
           title: const Text('List pokemon'),
           centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.to(
+                  () => CameraView(),
+                  binding: BindingsBuilder(() {
+                    Get.put(CameraBinding());
+                    Get.put(CameraController());
+                    // Get.lazyReplace(() => HomeController());
+                  }),
+                );
+              },
+              icon: const Icon(Icons.camera_alt),
+            )
+          ],
         ),
         body: SafeArea(
           child: EasyRefresh(
