@@ -30,13 +30,13 @@ snackbar(status, message, duration, button) {
   Get.snackbar(
     status,
     message,
-    colorText: ZFTextColors.textWhite,
+    colorText: ZFTextColors.textBlack,
     backgroundColor: colors,
     mainButton: button,
     duration: Duration(seconds: duration),
     icon: Icon(
       Icons.error,
-      color: ZFTextColors.textWhite,
+      color: ZFTextColors.textBlack,
     ),
     animationDuration: const Duration(milliseconds: 1000),
   );

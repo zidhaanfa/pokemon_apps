@@ -34,7 +34,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.POKEMON,
-      page: () => const PokemonView(),
+      page: () => PokemonView(),
+      arguments: {
+        'name': Get.arguments['name'],
+        'idLink': Get.arguments['idLink'],
+        'id': Get.arguments['id'],
+      },
       binding: PokemonBinding(),
     ),
   ];

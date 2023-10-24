@@ -20,9 +20,13 @@ class HomeController extends GetxController {
   final count = 0.obs;
   List<dynamic> pokemonData = [];
   final nextLink = ''.obs;
-  final prevLink = null.obs;
-  final loadingIs = false.obs;
+  final prevLink = ''.obs;
+  final loadingIs = true.obs;
+  final error = ''.obs;
+  final limit = 20.obs;
+  final offset = 0.obs;
   PokemonModels? pokemonModels;
+  ScrollController scrollController = ScrollController();
   @override
   void onInit() {
     super.onInit();
@@ -59,8 +63,8 @@ class HomeController extends GetxController {
       response = await Dio().get(
         Api.pokemon,
         queryParameters: {
-          "limit": 20,
-          "offset": 20,
+          "limit": limit.value,
+          "offset": offset.value,
         },
         onReceiveProgress: (int count, int total) {
           var prosesLoadingRec = (count / total * 100).round();
@@ -111,6 +115,8 @@ class HomeController extends GetxController {
         prefs = await SharedPreferences.getInstance();
         PokemonModels.fromJson(responseMap);
         pokemonModels = PokemonModels.fromJson(responseMap);
+        nextLink.value = pokemonModels!.next ?? '';
+        prevLink.value = pokemonModels!.previous ?? '';
         //print KelasModels
         if (kDebugMode) {}
         Timer(
@@ -121,7 +127,8 @@ class HomeController extends GetxController {
           EasyLoading.dismiss();
         });
       } else {
-        Get.back();
+        error.value = response!.statusMessage.toString();
+        // Get.back();
         EasyLoading.showError(response!.statusMessage.toString());
         if (kDebugMode) {
           print('status code: ${response.statusCode}');
