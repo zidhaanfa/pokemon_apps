@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "743530423815",
+    "project_id": "zidan-flutter",
+    "storage_bucket": "zidan-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743530423815:android:859bd714270dec851d2ca2",
+        "android_client_info": {
+          "package_name": "com.example.pokemon_apps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "743530423815-m6po3c8c3pfu420s7q2c1s76r8qosafl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHL0-4HuUagyxqCZAjfWELGwBzgb73V8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "743530423815-m6po3c8c3pfu420s7q2c1s76r8qosafl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "743530423815-p9i5lbk4obf5g3nsmhuldc6uuu5grmo0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pokemonApps"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

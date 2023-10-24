@@ -1,8 +1,13 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../home/bindings/home_binding.dart';
@@ -14,8 +19,9 @@ class LoginController extends GetxController {
 
   SharedPreferences? prefs;
 
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
-  // final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  GoogleSignInAccount? currentUser;
   TextEditingController userIdController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   var isLogin = false.obs;
@@ -26,6 +32,12 @@ class LoginController extends GetxController {
   final userLoginAutoValidate = false.obs;
   @override
   void onInit() {
+    googleSignIn.onCurrentUserChanged.listen((account) {
+      // setState(() {
+      currentUser = account;
+      // });
+    });
+    googleSignIn.signInSilently();
     super.onInit();
   }
 
@@ -37,6 +49,46 @@ class LoginController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  Future<void> handleSignIn() async {
+    try {
+      await googleSignIn.signIn();
+      isLogin.value = true;
+    } catch (error) {
+      if (kDebugMode) {
+        print(error);
+      }
+    }
+  }
+
+  Future<UserCredential?> handleGoogleSignIn() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.signIn();
+      final GoogleSignInAuthentication? googleSignInAuthentication =
+          await googleSignInAccount?.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication?.accessToken,
+        idToken: googleSignInAuthentication?.idToken,
+      );
+      final UserCredential authResult =
+          await auth.signInWithCredential(credential);
+      final User? user = authResult.user;
+      assert(!user!.isAnonymous);
+      isLogin.value = true;
+      Timer(Duration(seconds: 1), () {
+        Get.to(() => const HomeView(), binding: BindingsBuilder(() {
+          Get.put(HomeBinding());
+          Get.put(HomeController());
+          // Get.lazyReplace(() => HomeController());
+        }));
+      });
+      return authResult;
+    } catch (error) {
+      print(error);
+      return null;
+    }
   }
 
   void increment() => count.value++;
@@ -67,10 +119,10 @@ class LoginController extends GetxController {
   }
 
   void loginProcess() async {
-    Get.to(() => const HomeView(), binding: BindingsBuilder(() {
-      Get.put(HomeBinding());
-      Get.put(HomeController());
-      // Get.lazyReplace(() => HomeController());
-    }));
+    // Get.to(() => const HomeView(), binding: BindingsBuilder(() {
+    //   Get.put(HomeBinding());
+    //   Get.put(HomeController());
+    //   // Get.lazyReplace(() => HomeController());
+    // }));
   }
 }
