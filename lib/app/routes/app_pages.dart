@@ -36,9 +36,9 @@ class AppPages {
       name: _Paths.POKEMON,
       page: () => PokemonView(),
       arguments: {
-        'name': Get.arguments['name'],
-        'idLink': Get.arguments['idLink'],
-        'id': Get.arguments['id'],
+        'name': Get.arguments,
+        'idLink': Get.arguments,
+        'id': Get.arguments,
       },
       binding: PokemonBinding(),
     ),
