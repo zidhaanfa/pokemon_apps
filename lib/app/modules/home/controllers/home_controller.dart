@@ -95,6 +95,7 @@ class HomeController extends GetxController {
         print(e.response!.headers);
         print(e.response!.requestOptions);
       } else {
+        EasyLoading.dismiss();
         // Something happened in setting up or sending the request that triggered an Error
         betterShowMessage(
           title: "Terjadi kesalahan",
@@ -129,6 +130,8 @@ class HomeController extends GetxController {
       } else {
         error.value = response!.statusMessage.toString();
         // Get.back();
+
+        EasyLoading.dismiss();
         EasyLoading.showError(response!.statusMessage.toString());
         if (kDebugMode) {
           print('status code: ${response.statusCode}');

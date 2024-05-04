@@ -30,7 +30,7 @@ snackbar(status, message, duration, button) {
   Get.snackbar(
     status,
     message,
-    colorText: ZFTextColors.textBlack,
+    colorText: textColor,
     backgroundColor: colors,
     mainButton: button,
     duration: Duration(seconds: duration),

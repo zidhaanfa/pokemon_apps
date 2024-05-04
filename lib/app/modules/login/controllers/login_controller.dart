@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../config/function/snackbar.dart';
 import '../../home/bindings/home_binding.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../home/views/home_view.dart';
@@ -87,6 +88,12 @@ class LoginController extends GetxController {
       return authResult;
     } catch (error) {
       print(error);
+      snackbar(
+        "error",
+        "Login Error",
+        1,
+        null,
+      );
       return null;
     }
   }
